@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roster</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+<body>
+    <header>
+        <h1>Current Roster</h1>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="roster-section">
+            <table id="roster-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date of Birth</th>
+                        <th>Enrollment Date</th>
+                        <th>Expiration Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="roster-table-body">
+                    <!-- Rows will be dynamically added here -->
+                    <!-- Dynamically populated rows -->
+                {% for child in roster %}
+                <tr>
+                    <td>{{ child.id }}</td>
+                    <td>{{ child.first_name }}</td>
+                    <td>{{ child.last_name }}</td>
+                    <td>{{ child.dob }}</td>
+                    <td>{{ child.enrollment_date }}</td>
+                    <td>{{ child.expiration_date }}</td>
+                    <td>
+                        <button class="remove-child-button" data-child-id="1">Remove</button>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 The Provider</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            function fetchRosterTable() {
+                fetch("/roster/get-roster", {  // Ensure endpoint matches
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    const tableBody = document.getElementById("roster-table-body");
+                    tableBody.innerHTML = "";  // Clear previous content
+        
+                    data.forEach((child, index) => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${child.first_name}</td>
+                            <td>${child.last_name}</td>
+                            <td>${child.dob}</td>
+                            <td>${child.enrollment_date}</td>
+                            <td>${child.expiration_date}</td>
+                            <td><button class="remove-child" data-id="${child.id}">Remove</button></td>
+                        `;
+                        tableBody.appendChild(row);
+        
+                        // Add functionality to remove buttons
+                        row.querySelector(".remove-child").addEventListener("click", (event) => {
+                            const childId = event.target.dataset.id;
+                            removeChildFromRoster(childId, row); // Pass the row to remove it from DOM directly
+                        });
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching roster data:", error);
+                    alert("Failed to fetch roster data.");
+                });
+            }
+        
+            // Function to remove a child from the roster
+            function removeChildFromRoster(childId, row) {
+                fetch(`/roster/roster/remove-child/${childId}`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to remove child with ID ${childId}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.success) {
+                        row.remove();  // Directly remove the row from the table
+                        alert("Child removed successfully!");
+                    } else {
+                        alert(`Error: ${data.message}`);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error removing child:", error);
+                    alert("An error occurred while trying to remove the child.");
+                });
+            }
+        
+            // Fetch roster table when the page loads
+            fetchRosterTable();
+        });
+        
+    </script>

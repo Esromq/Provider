@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Provider</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>The Provider</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#documents">Documents</a></li>
+                <li><a href="#claims-section">Claims</a></li>
+                <li><a href="#ai-assistant">AI Assistant</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- User Profile Section -->
+        <section id="dashboard" class="section">
+            <h2>My Daycare</h2>
+            <div class="profile-container">
+                <p><strong>Daycare Name:</strong> ABC Daycare</p>
+                <p><strong>Location:</strong> 123 ABC St, TUVWXYZ GA 12345</p>
+                <p><strong>License #:</strong> 123456</p>
+                <p><strong>Director Name:</strong> John Doe</p>
+                <p><strong>Capacity:</strong> 50 children</p>
+                <p><strong>Contact:</strong> (555) 555-5555 | email@example.com</p>
+                <a href="/static/monthly_claim_overview.html" class="btn">View Claim Overview</a>
+            </div>
+            
+        </section>
+            <!-- Enrollment Form Section -->
+            <section id="enrollment" class="section">
+                <h2>Enrollment Form</h2>
+                <form id="enrollment-form" method="POST">
+                    <div id="children-container">
+                        <!-- Dynamically added children forms will appear here -->
+                    </div>
+                    <button type="button" id="add-child">Add Child</button>
+    
+                    <button type="submit" id="submit-enroll">Submit</button>
+                </form>
+            </section>
+        </main>
+
+        <!-- Claims Section -->
+        <section id="claims-section" class="section">
+            <h2>Monthly Claims</h2>
+            <p>View your attendance, meal validations, and reimbursement calculations here.</p>
+<!-- index.html -->
+<button id="create-claim">Create Claim</button>
+
+<script>
+    document.getElementById("create-claim").addEventListener("click", function () {
+        window.location.href = "/claims/claims";  // Redirect to claims.html
+    });
+</script>
+            <button id="view-claim-overview-button">View Claim Overview</button>
+            <button id="view-roster-button">View Roster</button> <!-- Roster Button for viewing roster -->
+        <script>
+            document.getElementById("view-roster-button").addEventListener("click", function () {
+                window.location.href = "/roster/roster";  // Redirect to claims.html
+            });
+        </script>
+        </section>
+
+        <!-- Document Containers Section -->
+        <section id="documents" class="section">
+            <h2>MONTHLY LIBRARY</h2>
+            <div class="doc-container">
+                <div class="doc-item">
+                    <h3>Receipts</h3>
+                    <button id="upload-receipt-button">Upload</button>
+                </div>
+                <div class="doc-item">
+                    <h3>Rosters</h3>
+                    <button id="view-roster-docs-button">View</button> <!-- Button to view uploaded rosters -->
+                </div>
+                <div class="doc-item">
+                    <h3>Menus</h3>
+                    <button id="upload-menus-button">Upload</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Assistant Section -->
+        <section id="ai-assistant" class="section">
+            <h2>Ask The Provider</h2>
+            <textarea placeholder="How can I help you today?" id="ai-query"></textarea>
+            <button id="ask-ai-button">Ask AI</button>
+        </section>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 The Provider. All rights reserved.</p>
+    </footer>
+</body>
+</html>

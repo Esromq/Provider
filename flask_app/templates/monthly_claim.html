@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Claim</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Monthly Claim</h1>
+        <p>Current Month: <span id="month-name"></span></p>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Date of Birth</th>
+                    <th>Enrollment Date</th>
+                    <th>Expiration Date</th>
+                </tr>
+            </thead>
+            <tbody id="roster-table-body">
+                <!-- Rows will be populated by script.js -->
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 The Provider. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
