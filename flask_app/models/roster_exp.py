@@ -5,7 +5,6 @@ from flask_app.database.db import db
 from flask_app import app
 
 
-db.init_app(app)
 app.secret_key = 'your_secret_key'  # For flash messages
 
 enrollments = []  # Stores children data
@@ -23,6 +22,6 @@ class ExpiredRoster(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     dob = db.Column(db.Date, nullable=False)
-    date_of_enrollment = db.Column(db.Date, nullable=False)
+    date_of_enrollment = db.Column(db.Date, nullable=True)
     expiration_date = db.Column(db.Date, nullable=False)
-    rate_type = db.Column(db.String(20), nullable=False)
+    rate_type = db.Column(db.String(20), nullable=True)

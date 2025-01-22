@@ -1,10 +1,13 @@
 from flask import Flask, jsonify
 from flask_app.database.db import db
-from sqlalchemy import Column, Integer, String, Date, Text
+from sqlalchemy import Column, ForeignKey, Integer, String, Date, Text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import registry
 from flask_login import UserMixin
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
+from sqlalchemy.orm import relationship
+
+
 
 
 from datetime import datetime
@@ -23,78 +26,93 @@ Base = mapper_registry.generate_base()
    # name = Column(String(100), nullable=False)
     
    
-class claims(db.Model):
+class Claims(db.Model):
     __tablename__ = 'claims'
-    id = db.Column(db.Integer, primary_key=True)
-    operating_cost = db.Column(db.Float, nullable=True)
-    meal_count = db.Column(db.Integer)
-    total_meals_served = db.Column(db.Float, nullable=True)
-
+    __table_args__ = {'extend_existing': True}
     
-    def __init__(self, operating_cost=None, receipts=None, meal_count=None):
-        self.operating_cost = operating_cost
-        self.receipts = receipts or []
-        self.meal_count = meal_count
+    id = Column(Integer, primary_key=True)
+    receipt_id = Column(Integer, ForeignKey('receipt.id'))
+    meal_counts_id = Column(Integer, ForeignKey('meal_counts.id'), nullable=False)
+    
+    # Specify the foreign_keys argument to clarify which foreign key to use
+    meal_counts = relationship("MealCount", back_populates="claims", foreign_keys=[meal_counts_id], remote_side=[meal_counts_id])
+    receipt = relationship("Receipt", back_populates="claims", foreign_keys=[receipt_id])  # Specify foreign_keys here
+
+    def __repr__(self):
+        return f'<Claims {self.id} {self.meal_counts} {self.receipt}>'
+
+class MealCount(db.Model):
+    __tablename__ = 'meal_counts'
+    __table_args__ = {'extend_existing': True}
+    
+    id = Column(Integer, primary_key=True)
+    claims_id = Column(Integer, ForeignKey('claims.id'))  # ForeignKey reference to Claims
+    claims = relationship("Claims", back_populates="meal_counts", foreign_keys=[claims_id], remote_side=[claims_id])
+    
+    # Meal count fields
+    infant_breakfast_birth_3mos = Column(Integer, default=0)
+    infant_breakfast_4_7mos = Column(Integer, default=0)
+    infant_breakfast_8_12mos = Column(Integer, default=0)    
+    child_breakfast_1yrs = Column(Integer, default=0)
+    child_breakfast_2yrs = Column(Integer, default=0)
+    child_breakfast_3_5yrs = Column(Integer, default=0)
+    child_breakfast_6_12yrs = Column(Integer, default=0)
+    infant_AMSnack_birth_3mos = Column(Integer, default=0)
+    infant_AMSnack_4_7mos = Column(Integer, default=0)
+    infant_AMSnack_8_12mos = Column(Integer, default=0)
+    child_AMSnack_1yrs = Column(Integer, default=0)
+    child_AMSnack_2yrs = Column(Integer, default=0)
+    child_AMSnack_3_5yrs = Column(Integer, default=0)
+    child_AMSnack_6_12yrs = Column(Integer, default=0)
+    infant_Lunch_birth_3mos = Column(Integer, default=0)
+    infant_Lunch_4_7mos = Column(Integer, default=0)
+    infant_Lunch_8_12mos = Column(Integer, default=0)
+    child_Lunch_1yrs = Column(Integer, default=0)
+    child_Lunch_2yrs = Column(Integer, default=0)
+    child_Lunch_3_5yrs = Column(Integer, default=0)
+    child_Lunch_6_12yrs = Column(Integer, default=0)
+    infant_PMSnack_birth_3mos = Column(Integer, default=0)
+    infant_PMSnack_4_7mos = Column(Integer, default=0)
+    infant_PMSnack_8_12mos = Column(Integer, default=0)
+    child_PMSnack_1yrs = Column(Integer, default=0)
+    child_PMSnack_2yrs = Column(Integer, default=0)
+    child_PMSnack_3_5yrs = Column(Integer, default=0)
+    child_PMSnack_6_12yrs = Column(Integer, default=0)
+    infant_Supper_birth_3mos = Column(Integer, default=0)
+    infant_Supper_4_7mos = Column(Integer, default=0)
+    infant_Supper_8_12mos = Column(Integer, default=0)
+    child_Supper_1yrs = Column(Integer, default=0)
+    child_Supper_2yrs = Column(Integer, default=0)
+    child_Supper_3_5yrs = Column(Integer, default=0)
+    child_Supper_6_12yrs = Column(Integer, default=0)
+    meal_count = Column(Integer, default=0)
+    def __repr__(self):
+        return f'<MealCount {self.id} {self.meal_count}>'
+def __repr__(self):
+        return f'<MealCount {self.id} {self.meal_count}>'
 
 class Receipt(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String(120))
-    paid_to = db.Column(db.String(120))
-    purchase_cost = db.Column(db.Float, nullable=False)
-    purchase_date = db.Column(db.Date, nullable=False)
-    paid_to = db.Column(db.String(255), nullable=False)
-    purchase_type = db.Column(db.String(255), nullable=False)
-    claim_id = db.Column(db.Integer, db.ForeignKey('claims.id'), nullable=False)
-
-
+    __tablename__ = 'receipt'
+    __table_args__ = {'extend_existing': True}
     
-class MealCount(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    child_breakfast_1yrs = db.Column(db.Integer, default=0)
-    child_breakfast_2yrs = db.Column(db.Integer, default=0)
-    child_breakfast_3_5yrs = db.Column(db.Integer, default=0)
-    child_breakfast_6_12yrs = db.Column(db.Integer, default=0)
+    id = Column(Integer, primary_key=True)
+    claims_id = Column(Integer, ForeignKey('claims.id'))  # ForeignKey reference to Claims
+    paid_to = Column(String(120))
+    purchase_type = Column(String(255), nullable=False)
+    purchase_cost = Column(Float, nullable=False)
+    purchase_date = Column(Date, nullable=False)
+    operating_cost = Column(Float, nullable=True)
 
-    child_AMSnack_1yrs = db.Column(db.Integer, default=0)
-    child_AMSnack_2yrs = db.Column(db.Integer, default=0)
-    child_AMSnack_3_5yrs = db.Column(db.Integer, default=0)
-    child_AMSnack_6_12yrs = db.Column(db.Integer, default=0)
+    # Specify the foreign_keys argument to clarify which foreign key to use
+    claims = relationship('Claims', back_populates='receipt', foreign_keys=[claims_id])
 
-    child_Lunch_1yrs = db.Column(db.Integer, default=0)
-    child_Lunch_2yrs = db.Column(db.Integer, default=0)
-    child_Lunch_3_5yrs = db.Column(db.Integer, default=0)
-    child_Lunch_6_12yrs = db.Column(db.Integer, default=0)
+    def __init__(self, operating_cost=None, receipt=None, meal_counts=None):
+        self.operating_cost = operating_cost
+        self.receipt = receipt or []
+        self.meal_counts = meal_counts
 
-    child_PMSnack_1yrs = db.Column(db.Integer, default=0)
-    child_PMSnack_2yrs = db.Column(db.Integer, default=0)
-    child_PMSnack_3_5yrs = db.Column(db.Integer, default=0)
-    child_PMSnack_6_12yrs = db.Column(db.Integer, default=0)
-
-    child_Supper_1yrs = db.Column(db.Integer, default=0)
-    child_Supper_2yrs = db.Column(db.Integer, default=0)
-    child_Supper_3_5yrs = db.Column(db.Integer, default=0)
-    child_Supper_6_12yrs = db.Column(db.Integer, default=0)
-
-    infant_breakfast_birth_3mos = db.Column(db.Integer, default=0)
-    infant_breakfast_4_7mos = db.Column(db.Integer, default=0)
-    infant_breakfast_8_12mos = db.Column(db.Integer, default=0)
-
-    infant_AMSnack_birth_3mos = db.Column(db.Integer, default=0)
-    infant_AMSnack_4_7mos = db.Column(db.Integer, default=0)
-    infant_AMSnack_8_12mos = db.Column(db.Integer, default=0)
-
-    infant_Lunch_birth_3mos = db.Column(db.Integer, default=0)
-    infant_Lunch_4_7mos = db.Column(db.Integer, default=0)
-    infant_Lunch_8_12mos = db.Column(db.Integer, default=0)
-
-    infant_PMSnack_birth_3mos = db.Column(db.Integer, default=0)
-    infant_PMSnack_4_7mos = db.Column(db.Integer, default=0)
-    infant_PMSnack_8_12mos = db.Column(db.Integer, default=0)
-
-    infant_Supper_birth_3mos = db.Column(db.Integer, default=0)
-    infant_Supper_4_7mos = db.Column(db.Integer, default=0)
-    infant_Supper_8_12mos = db.Column(db.Integer, default=0)
-
+    def __repr__(self):
+        return f'<Receipt {self.id} {self.purchase_type}>'
     @property
     def totals(self):
         return {
@@ -155,14 +173,9 @@ class MealCount(db.Model):
             ]),
         }
 
-
-
-
-
-
-
 class daycare(db.Model):
-    __tablename__ = 'daycare'
+    __tablename__ = 'daycare' 
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     address = db.Column(db.String(80), nullable=False, unique=True)
     email = db.Column(db.String(120), nullable=False, unique=True)
@@ -170,17 +183,18 @@ class daycare(db.Model):
 
 class Enrollment(db.Model):
     __tablename__ = 'Enrollment'
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     dob = db.Column(db.Date, nullable=False)
-    date_of_enrollment = db.Column(db.Date, nullable=False)
+    date_of_enrollment = db.Column(db.Date, nullable=True)
     expiration_date = db.Column(db.Date, nullable=False)
-    rate_type = db.Column(db.String(20), nullable=False)
+    rate_type = db.Column(db.String(20), nullable=True)
 
 class MonthlyClaimOverview(db.Model):
     __tablename__ = 'monthly_claim_overview'
-
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     daycare_id = db.Column(db.Integer, db.ForeignKey('daycare.id'), nullable=False)  # FK to Daycare table
     daycare = db.relationship('Daycare', back_populates='monthly_claims')  # Relationship with Daycare
@@ -218,6 +232,7 @@ class MonthlyClaimOverview(db.Model):
 
 class MonthlyClaim(db.Model):
     __tablename__ = 'monthly_claims'
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     month = db.Column(db.String(20), nullable=False)  # e.g., "January 2025"
@@ -250,13 +265,15 @@ class MonthlyClaim(db.Model):
 
 class Roster(db.Model):
     __tablename__ = 'roster'
+    __table_args__ = {'extend_existing': True}
+
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     dob = db.Column(db.Date, nullable=False)
-    date_of_enrollment = db.Column(db.Date, nullable=False)
+    date_of_enrollment = db.Column(db.Date, nullable=True)
     expiration_date = db.Column(db.Date, nullable=False)
-    rate_type = db.Column(db.String(20), nullable=False)
+    rate_type = db.Column(db.String(20), nullable=True)
 
     def __repr__(self):
         return f'<Roster {self.first_name} {self.last_name}>'
@@ -264,18 +281,21 @@ class Roster(db.Model):
 
 class ExpiredRoster(db.Model):
     __tablename__ = 'roster_exp'
-    
+    __table_args__ = {'extend_existing': True}
+
+
         # Define a primary key column
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     last_name = db.Column(db.String(50), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     dob = db.Column(db.Date, nullable=False)
-    date_of_enrollment = db.Column(db.Date, nullable=False)
+    date_of_enrollment = db.Column(db.Date, nullable=True)
     expiration_date = db.Column(db.Date, nullable=False)
-    rate_type = db.Column(db.String(20), nullable=False)
+    rate_type = db.Column(db.String(20), nullable=True)
     
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
+    __table_args__ = {'extend_existing': True}
 
     daycare_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     last_name = db.Column(db.String(50), nullable=False)

@@ -35,158 +35,205 @@
             <h1>Submit a Claim</h1>
 
             <!-- Form for Inputting Claims -->
-            <form id="submitClaimForm">
-                <h3>Meal Counts</h3>
-                <table id="meal-counts-table" border="1">
-                    <thead>
-                        <tr>
-                            <th>Meal Type</th>
-                            <th>Birth-3mos</th>
-                            <th>4-7mos</th>
-                            <th>8-12mos</th>
-                            <th>1yr</th>
-                            <th>2yrs</th>
-                            <th>3-5yrs</th>
-                            <th>6-12yrs</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Breakfast</td>
-                            <td><input type="number" name="infant_breakfast_birth_3mos" min="0"></td>
-                            <td><input type="number" name="infant_breakfast_4_7mos" min="0"></td>
-                            <td><input type="number" name="infant_breakfast_8_12mos" min="0"></td>
-                            <td><input type="number" name="child_breakfast_1yrs" min="0"></td>
-                            <td><input type="number" name="child_breakfast_2yrs" min="0"></td>
-                            <td><input type="number" name="child_breakfast_3_5yrs" min="0"></td>
-                            <td><input type="number" name="child_breakfast_6_12yrs" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>AM Snack</td>
-                            <td><input type="number" name="infant_AMSnack_birth_3mos" min="0"></td>
-                            <td><input type="number" name="infant_AMSnack_4_7mos" min="0"></td>
-                            <td><input type="number" name="infant_AMSnack_8_12mos" min="0"></td>
-                            <td><input type="number" name="child_AMSnack_1yrs" min="0"></td>
-                            <td><input type="number" name="child_AMSnack_2yrs" min="0"></td>
-                            <td><input type="number" name="child_AMSnack_3_5yrs" min="0"></td>
-                            <td><input type="number" name="child_AMSnack_6_12yrs" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>Lunch</td>
-                            <td><input type="number" name="infant_Lunch_birth_3mos" min="0"></td>
-                            <td><input type="number" name="infant_Lunch_4_7mos" min="0"></td>
-                            <td><input type="number" name="infant_Lunch_8_12mos" min="0"></td>
-                            <td><input type="number" name="child_Lunch_1yrs" min="0"></td>
-                            <td><input type="number" name="child_Lunch_2yrs" min="0"></td>
-                            <td><input type="number" name="child_Lunch_3_5yrs" min="0"></td>
-                            <td><input type="number" name="child_Lunch_6_12yrs" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>PM Snack</td>
-                            <td><input type="number" name="infant_PMSnack_birth_3mos" min="0"></td>
-                            <td><input type="number" name="infant_PMSnack_4_7mos" min="0"></td>
-                            <td><input type="number" name="infant_PMSnack_8_12mos" min="0"></td>
-                            <td><input type="number" name="child_PMSnack_1yrs" min="0"></td>
-                            <td><input type="number" name="child_PMSnack_2yrs" min="0"></td>
-                            <td><input type="number" name="child_PMSnack_3_5yrs" min="0"></td>
-                            <td><input type="number" name="child_PMSnack_6_12yrs" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>Supper</td>
-                            <td><input type="number" name="infant_Supper_birth_3mos" min="0"></td>
-                            <td><input type="number" name="infant_Supper_4_7mos" min="0"></td>
-                            <td><input type="number" name="infant_Supper_8_12mos" min="0"></td>
-                            <td><input type="number" name="child_Supper_1yrs" min="0"></td>
-                            <td><input type="number" name="child_Supper_2yrs" min="0"></td>
-                            <td><input type="number" name="child_Supper_3_5yrs" min="0"></td>
-                            <td><input type="number" name="child_Supper_6_12yrs" min="0"></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <form id="claimForm">
+                <div>
+                    <h3>Meal Counts</h3>
+                    <table id="meal-counts-table" border="1">
+                        <thead>
+                            <tr>
+                                <th>Meal Type</th>
+                                <th>Birth-3mos</th>
+                                <th>4-7mos</th>
+                                <th>8-12mos</th>
+                                <th>1yr</th>
+                                <th>2yrs</th>
+                                <th>3-5yrs</th>
+                                <th>6-12yrs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Breakfast</td>
+                                <td><input type="number" name="infant_breakfast_birth_3mos[]" min="0"></td>
+                                <td><input type="number" name="infant_breakfast_4_7mos[]" min="0"></td>
+                                <td><input type="number" name="infant_breakfast_8_12mos[]" min="0"></td>
+                                <td><input type="number" name="child_breakfast_1yrs[]" min="0"></td>
+                                <td><input type="number" name="child_breakfast_2yrs[]" min="0"></td>
+                                <td><input type="number" name="child_breakfast_3_5yrs[]" min="0"></td>
+                                <td><input type="number" name="child_breakfast_6_12yrs[]" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>AM Snack</td>
+                                <td><input type="number" name="infant_AMSnack_birth_3mos[]" min="0"></td>
+                                <td><input type="number" name="infant_AMSnack_4_7mos[]" min="0"></td>
+                                <td><input type="number" name="infant_AMSnack_8_12mos[]" min="0"></td>
+                                <td><input type="number" name="child_AMSnack_1yrs[]" min="0"></td>
+                                <td><input type="number" name="child_AMSnack_2yrs[]" min="0"></td>
+                                <td><input type="number" name="child_AMSnack_3_5yrs[]" min="0"></td>
+                                <td><input type="number" name="child_AMSnack_6_12yrs[]" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Lunch</td>
+                                <td><input type="number" name="infant_Lunch_birth_3mos[]" min="0"></td>
+                                <td><input type="number" name="infant_Lunch_4_7mos[]" min="0"></td>
+                                <td><input type="number" name="infant_Lunch_8_12mos[]" min="0"></td>
+                                <td><input type="number" name="child_Lunch_1yrs[]" min="0"></td>
+                                <td><input type="number" name="child_Lunch_2yrs[]" min="0"></td>
+                                <td><input type="number" name="child_Lunch_3_5yrs[]" min="0"></td>
+                                <td><input type="number" name="child_Lunch_6_12yrs[]" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>PM Snack</td>
+                                <td><input type="number" name="infant_PMSnack_birth_3mos[]" min="0"></td>
+                                <td><input type="number" name="infant_PMSnack_4_7mos[]" min="0"></td>
+                                <td><input type="number" name="infant_PMSnack_8_12mos[]" min="0"></td>
+                                <td><input type="number" name="child_PMSnack_1yrs[]" min="0"></td>
+                                <td><input type="number" name="child_PMSnack_2yrs[]" min="0"></td>
+                                <td><input type="number" name="child_PMSnack_3_5yrs[]" min="0"></td>
+                                <td><input type="number" name="child_PMSnack_6_12yrs[]" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Supper</td>
+                                <td><input type="number" name="infant_Supper_birth_3mos[]" min="0"></td>
+                                <td><input type="number" name="infant_Supper_4_7mos[]" min="0"></td>
+                                <td><input type="number" name="infant_Supper_8_12mos[]" min="0"></td>
+                                <td><input type="number" name="child_Supper_1yrs[]" min="0"></td>
+                                <td><input type="number" name="child_Supper_2yrs[]" min="0"></td>
+                                <td><input type="number" name="child_Supper_3_5yrs[]" min="0"></td>
+                                <td><input type="number" name="child_Supper_6_12yrs[]" min="0"></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <label>
-                    Meal Count Total:
-                    <input type="number" name="meal_count" min="1" required>
-                </label><br>
-
-                <label>
-                    Purchase Type:
-                    <select name="purchase_type" required>
-                        <option value="Food">Food</option>
-                        <option value="Non-Food">Non-Food</option>
-                        <option value="Food Services">Food Services</option>
-                        <option value="Food Labor">Food Labor</option>
-                        <option value="Milk (Whole/2%)">Milk (Whole/2%)</option>
-                        <option value="Milk (Skim/1%)">Milk (Skim/1%)</option>
-                    </select>
-                </label><br>
+                    <label>
+                        Meal Count Total:
+                        <input type="number" name="meal_counts" min="1" required>
+                    </label><br>
+                </div>
 
                 <div id="receipts-section">
                     <h3>Receipts</h3>
+
+                    <label>
+                        Paid To:
+                        <input type="text" name="paid_to[]" required>
+                    </label><br>
+                    <label>
+                        Purchase Type:
+                        <select name="purchase_type[]" required>
+                            <option value="Food">Food</option>
+                            <option value="Non-Food">Non-Food</option>
+                            <option value="Food Services">Food Services</option>
+                            <option value="Food Labor">Food Labor</option>
+                            <option value="Milk (Whole/2%)">Milk (Whole/2%)</option>
+                            <option value="Milk (Skim/1%)">Milk (Skim/1%)</option>
+                        </select>
+                    </label><br>
+
                     <div class="receipt">
                         <label>
-                            Receipt Date:
-                            <input type="date" name="receipt_date[]" required>
+                            Receipt Amount:
+                            <input type="number" name="purchase_cost[]" step="0.01" required>
                         </label><br>
                         <label>
                             Purchase Date:
-                            <input type="date" name="purchase_date" required>
-                        </label><br>
-                        <label>
-                            Paid To:
-                            <input type="text" name="paid_to" required>
-                        </label><br>
-                        <label>
-                            Receipt Amount:
-                            <input type="number" name="receipt_amount[]" step="0.01" required>
-                        </label><br>
-                        <label>
-                            Total Operating Cost:
-                            <input type="number" name="operating_cost" step="0.01" required>
+                            <input type="date" name="purchase_date[]" required>
                         </label><br>
                     </div>
+
+                    <button type="button" id="add-receipt">Add Receipt</button><br>
+                    <button type="button" class="remove-receipt">Remove Receipt</button>
                 </div>
-                <button type="button" id="add-receipt">Add Receipt</button><br>
-                <button type="button" class="remove-receipt">Remove Receipt</button>
+
+                <label>
+                    Total Operating Cost:
+                    <input type="number" name="operating_cost" step="0.01" required>
+                </label><br>
+
                 <button type="submit">Submit</button>
             </form>
+
+            </div>
         </section>
-    </main>
+    </main>    
 
-    <script>
-        document.getElementById('submitClaimForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>
 
-            const form = event.target;
-            const formData = new FormData(form);
 
-            const jsonData = {};
-            formData.forEach((value, key) => {
-                if (key.endsWith('[]')) {
-                    const trimmedKey = key.slice(0, -2);
-                    if (!Array.isArray(jsonData[trimmedKey])) {
-                        jsonData[trimmedKey] = [];
-                    }
-                    jsonData[trimmedKey].push(value);
-                } else {
-                    jsonData[key] = value;
-                }
-            });
 
-            const response = await fetch('/claims/submit_claim', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(jsonData),
+
+document.getElementById('claimForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Function to submit a claim
+    async function submitClaim(claimForm) {
+        // Collecting meal data dynamically
+        const mealData = {};
+        const mealTypes = ['infant_breakfast', 'child_breakfast', 'infant_AMSnack', 'child_AMSnack', 'infant_Lunch', 'child_Lunch', 'infant_PMSnack', 'child_PMSnack', 'infant_Supper', 'child_Supper'];
+        const ageGroups = ['birth_3mos', '4_7mos', '8_12mos', '1yrs', '2yrs', '3_5yrs', '6_12yrs'];
+
+        for (const mealType of mealTypes) {
+            mealData[mealType] = {};
+            for (const ageGroup of ageGroups) {
+                const value = parseFloat(document.querySelector(`input[name="${mealType}_${ageGroup}[]"]`).value) || 0;
+                mealData[mealType][ageGroup] = value;
+            }
+        }
+
+        // Collecting other form data
+        const operatingCost = parseFloat(document.querySelector('input[name="operating_cost"]').value) || 0;
+        const receipts = document.querySelector('input[name="receipts"]').files; // Assuming it's a file input
+        const purchaseCost = Array.from(document.querySelectorAll('input[name="purchase_cost[]"]')).map(el => parseFloat(el.value) || 0);
+        const purchaseDates = Array.from(document.querySelectorAll('input[name="purchase_date[]"]')).map(el => el.value);
+        const paidTo = Array.from(document.querySelectorAll('input[name="paid_to[]"]')).map(el => el.value);
+        const purchaseTypes = Array.from(document.querySelectorAll('select[name="purchase_type[]"]')).map(el => el.value);
+
+        // Final data object
+        const data = {
+            mealData,
+            receipts,
+            purchaseCost,
+            purchaseDates,
+            paidTo,
+            purchaseTypes,
+            operatingCost,
+        };
+
+        try {
+            const formData = new FormData(); // Use FormData for file uploads
+            formData.append('data', JSON.stringify(data));
+
+            // Append files if any
+            for (const file of receipts) {
+                formData.append('receipts', file);
+            }
+
+            const response = await fetch("/claims/claims/submit-claims", {
+                method: "POST",
+                body: formData, // Send the form data with files
             });
 
             if (response.ok) {
-                alert('Claim submitted successfully!');
+                const result = await response.json();
+                alert(result.message || "Claim submitted successfully!");
+                claimForm.reset(); // Clear the form
             } else {
-                alert('Failed to submit claim.');
+                const result = await response.json();
+                alert(`Error: ${result.error || result.message}`);
             }
-        });
-    </script>
-</body>
-</html>
+        } catch (error) {
+            console.error(error);
+            alert("An error occurred while submitting the claim. Please try again.");
+        }
+    }
+
+    // Call the submitClaim function
+    submitClaim(event.target);
+});
+
+// Example: Create a new claim form on page load
+if (claimsContainer) {
+    createClaimForm();
+}

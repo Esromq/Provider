@@ -20,7 +20,7 @@ def init_db(app):
     - Bind the app to SQLAlchemy.
     - Create all tables in the database if they do not exist.
     """
-    db.init_app(app)  # Bind the app to SQLAlchemy
+    db.init_db(app)  # Bind the app to SQLAlchemy
     with app.app_context():
         db.create_all()  # Create tables
         

@@ -4,7 +4,6 @@ from flask_app.models.enrollment import Enrollment
 from flask_app.models.roster import Roster
 from datetime import datetime, timedelta
 import os
-from pydf import generate_pdf
 
 enrollment_bp = Blueprint('enrollment', __name__)
 

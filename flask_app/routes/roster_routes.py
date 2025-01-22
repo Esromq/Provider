@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_app.database.db import db
 from flask_app.models.roster import Roster
 from datetime import datetime, timedelta
-from pydf import generate_pdf
 import os
 
 roster_bp = Blueprint("roster", __name__)
@@ -50,20 +49,6 @@ def get_roster():
         print(f"Error fetching roster data: {e}")
         return jsonify({"error": "Failed to fetch roster data"}), 500
 
-@roster_bp.route("/remove-child/<int:child_id>", methods=["DELETE"])
-def remove_child(child_id):
-    """Remove a child from the roster."""
-    try:
-        child = Roster.query.get(child_id)
-        if not child:
-            return jsonify({"error": "Child not found"}), 404
-
-        db.session.delete(child)
-        db.session.commit()
-        return jsonify({"message": "Child removed successfully"})
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
 
 
 # Route to display the roster
@@ -84,10 +69,7 @@ def show_roster():
             for r in roster
         ]
         
-        # Generate and save PDF for the roster
-        pdf_file_path = generate_pdf(roster)
-        print(f"Generated PDF: {pdf_file_path}")
-        
+
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

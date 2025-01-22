@@ -1,6 +1,6 @@
 from flask_app.database.db import db  # Import db from the correct location
 
-class Roster(db.Model):  # This should work now
+class Roster(db.Model):  
     __tablename__ = 'roster'
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
